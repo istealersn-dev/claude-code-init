@@ -12,7 +12,7 @@ git clone https://github.com/istealersn-dev/claude-code-init.git
 cd claude-code-init
 
 # Initialize a new project
-./init-new-project.sh --name my-app --type web --framework react
+./init-new-project.sh --name my-project --type web --framework react
 ```
 
 ### For Existing Projects  
@@ -52,11 +52,8 @@ cd /path/to/existing/project
 
 | Type | Frameworks | Features |
 |------|------------|----------|
-| **Web** | React, Vue, Angular, Next.js, Nuxt, Svelte | Browser MCP, Design System extraction, Frontend tooling |
-| **API** | Express, FastAPI, Django, Flask | Database MCPs, HTTP client, Cloud provider integration |
-| **Mobile** | React Native, Flutter, Ionic | Device testing, App store integration |
-| **ML/AI** | PyTorch, TensorFlow, Scikit-learn | Jupyter integration, Dataset management |
-| **Desktop** | Electron, Tauri, Flutter Desktop | Platform-specific tooling |
+| **Web** | React, Vue, Angular, Next.js, Nuxt, Svelte, Vite | Browser MCP, Design System extraction, Frontend tooling, Tailwind CSS |
+| **API** | Express, Fastify, Koa, Hapi | Database MCPs, HTTP client, Cloud provider integration |
 
 ## Features
 
@@ -86,44 +83,31 @@ cd /path/to/existing/project
 
 ## Usage Examples
 
-### Initialize React Web Application
+### Initialize React + Vite + Tailwind Project
 
 ```bash
 ./init-new-project.sh \
-  --name "ecommerce-app" \
+  --name "my-project" \
   --type web \
   --framework react
 
-cd ecommerce-app
+cd my-project
 ../setup-mcp-servers.sh \
   --type web \
   --framework react \
   --database postgres
 ```
 
-### Migrate Existing Python API
+### Migrate Express.js to Fastify.js
 
 ```bash
-cd /path/to/python-api
+cd /path/to/express-api
 /path/to/claude-code-init/init-existing-project.sh --force
 
 /path/to/claude-code-init/setup-mcp-servers.sh \
   --type api \
-  --framework fastapi \
-  --database postgres \
-  --cloud aws
-```
-
-### Setup Mobile Development
-
-```bash
-./init-new-project.sh \
-  --name "mobile-app" \
-  --type mobile \
-  --framework react-native
-
-cd mobile-app  
-../setup-mcp-servers.sh --type mobile --framework react-native
+  --framework fastify \
+  --database postgres
 ```
 
 ## Script Options
