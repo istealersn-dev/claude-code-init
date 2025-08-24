@@ -1,6 +1,6 @@
 # Claude Code Project Initialization System
 
-A comprehensive toolkit to help engineers efficiently initialize new projects or migrate existing projects to use Claude Code with best practices, proper documentation, and optimized workflows.
+A comprehensive toolkit to help engineers efficiently initialize new projects or migrate existing projects to use Claude Code with best practices, proper documentation, and optimized workflows. Add a STAR if you like this!
 
 ## Quick Start
 
