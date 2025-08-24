@@ -3,12 +3,14 @@
 ## Getting Started (2 minutes)
 
 ### Installation
+
 ```bash
 # Clone the initialization toolkit
 git clone <internal-repo-url> ~/claude-code-init
 ```
 
 ### For New Projects
+
 ```bash
 cd ~/claude-code-init
 ./init-new-project.sh --name "my-app" --type web --framework react
@@ -17,6 +19,7 @@ cd my-app
 ```
 
 ### For Existing Projects
+
 ```bash
 cd /path/to/your/existing/project
 ~/claude-code-init/init-existing-project.sh
@@ -26,6 +29,7 @@ cd /path/to/your/existing/project
 ## What You Get
 
 After initialization, your project will have:
+
 - **`CLAUDE.md`** - Your personalized Claude Code instruction manual
 - **Optimized workflow** - Pre-configured for your project type
 - **MCP servers** - Automatically set up for database, cloud, etc.
@@ -41,7 +45,7 @@ After initialization, your project will have:
 ## Getting Help
 
 - **Project-specific help**: Check your project's `CLAUDE.md`
-- **MCP server issues**: See `mcp-setup-guide.md` 
+- **MCP server issues**: See `mcp-setup-guide.md`
 - **Session best practices**: See `session-management-guide.md`
 - **Team questions**: Ask in #engineering-claude-code Slack channel
 
@@ -59,16 +63,19 @@ After initialization, your project will have:
 ## Examples
 
 **React Web App:**
+
 ```bash
 ./init-new-project.sh --name "dashboard" --type web --framework react
 ```
 
 **Python API:**
+
 ```bash
 ./init-new-project.sh --name "api-service" --type api --framework fastapi
 ```
 
 **Mobile App:**
+
 ```bash
 ./init-new-project.sh --name "mobile-app" --type mobile --framework react-native
 ```
