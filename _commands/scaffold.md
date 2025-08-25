@@ -9,12 +9,14 @@ Arguments: `$ARGUMENTS` - feature name or component to scaffold
 I'll maintain scaffolding progress across sessions:
 
 **Session Files (in current project directory):**
+
 - `scaffold/plan.md` - Scaffolding plan and component list
 - `scaffold/state.json` - Created files and progress
 
 **IMPORTANT:** Session files are stored in a `scaffold` folder in your current project root
 
 **Auto-Detection:**
+
 - If session exists: Resume incomplete scaffolding
 - If no session: Create new scaffolding plan
 - Commands: `resume`, `status`, `new`
@@ -22,6 +24,7 @@ I'll maintain scaffolding progress across sessions:
 ## Phase 1: Pattern Discovery
 
 **MANDATORY FIRST STEPS:**
+
 1. Check if `scaffold` directory exists in current working directory
 2. If directory exists, check for session files:
    - Look for `scaffold/state.json`
@@ -38,6 +41,7 @@ I'll maintain scaffolding progress across sessions:
 I'll discover your project patterns:
 
 **Pattern Analysis:**
+
 - File organization structure
 - Naming conventions
 - Testing patterns
@@ -45,6 +49,7 @@ I'll discover your project patterns:
 - Documentation standards
 
 **Smart Detection:**
+
 - Find similar features already implemented
 - Identify architectural patterns
 - Detect testing frameworks
@@ -55,6 +60,7 @@ I'll discover your project patterns:
 Based on patterns, I'll create a scaffolding plan:
 
 **Component Structure:**
+
 - Main feature files
 - Test files
 - Documentation
@@ -62,6 +68,7 @@ Based on patterns, I'll create a scaffolding plan:
 - Integration points
 
 I'll write this plan to `scaffold/plan.md` with:
+
 - Each file to create
 - Template patterns to follow
 - Integration requirements
@@ -72,12 +79,14 @@ I'll write this plan to `scaffold/plan.md` with:
 I'll generate files matching your patterns:
 
 **Pattern Matching:**
+
 - Use your file naming style
 - Follow your directory structure
 - Match your code conventions
 - Apply your testing patterns
 
 **Content Generation:**
+
 - Boilerplate from existing code
 - Imports matching your style
 - Test structure from your patterns
@@ -88,6 +97,7 @@ I'll generate files matching your patterns:
 I'll create files systematically:
 
 **Execution Process:**
+
 1. Create directory structure
 2. Generate each component file
 3. Add appropriate tests
@@ -95,6 +105,7 @@ I'll create files systematically:
 5. Track each creation in state
 
 **Progress Tracking:**
+
 - Mark each file created in plan
 - Update state with file paths
 - Create meaningful commits
@@ -102,6 +113,7 @@ I'll create files systematically:
 ## Phase 5: Integration
 
 After scaffolding:
+
 - Update route configurations
 - Add to module exports
 - Update build configuration
@@ -111,13 +123,15 @@ After scaffolding:
 
 **Session Resume:**
 When you return and run `/scaffold` or `/scaffold resume`:
+
 - Load existing plan and progress
 - Show what was already created
 - Continue from last component
 - Maintain pattern consistency
 
 **Progress Example:**
-```
+
+```markdown
 RESUMING SCAFFOLDING
 ├── Feature: UserDashboard
 ├── Created: 5 of 8 files
@@ -130,14 +144,16 @@ Continuing scaffolding...
 ## Practical Examples
 
 **Start Scaffolding:**
-```
+
+```markdown
 /scaffold UserProfile          # Create user profile feature
 /scaffold "auth module"        # Create authentication module
 /scaffold PaymentService       # Create payment service
 ```
 
 **Session Control:**
-```
+
+```markdown
 /scaffold resume    # Continue existing scaffolding
 /scaffold status    # Check what's been created
 /scaffold new       # Start fresh scaffolding
@@ -146,12 +162,14 @@ Continuing scaffolding...
 ## Safety Guarantees
 
 **Protection Measures:**
+
 - Preview before creation
 - Incremental file generation
 - Pattern validation
 - Integration verification
 
 **Important:** I will NEVER:
+
 - Overwrite existing files
 - Break existing imports
 - Add AI attribution
