@@ -7,6 +7,7 @@ Serena is a powerful coding agent toolkit that provides semantic code retrieval,
 ## What Serena Provides
 
 ### Core Capabilities
+
 - **Semantic Code Search**: Find relevant code by meaning, not just text matching
 - **Intelligent Code Analysis**: Understand project structure and dependencies
 - **Project Indexing**: Fast retrieval of code patterns and implementations
@@ -14,6 +15,7 @@ Serena is a powerful coding agent toolkit that provides semantic code retrieval,
 - **Context-Aware Understanding**: Adapts to different project types and frameworks
 
 ### Cost Benefits
+
 - **Reduces Claude Token Usage**: Provides targeted code context instead of reading entire files
 - **Improves Query Efficiency**: Better understanding leads to fewer back-and-forth iterations
 - **Smart Context Management**: Only retrieves relevant code sections
@@ -23,6 +25,7 @@ Serena is a powerful coding agent toolkit that provides semantic code retrieval,
 ### 1. Add Serena Setup to Existing Scripts
 
 #### For `init-new-project.sh`
+
 Add Serena setup as the final step after project structure creation:
 
 ```bash
@@ -32,6 +35,7 @@ echo "🔍 Setting up Serena MCP for enhanced code intelligence..."
 ```
 
 #### For `init-existing-project.sh`
+
 Add Serena setup after project detection and CLAUDE.md creation:
 
 ```bash
@@ -41,6 +45,7 @@ echo "🔍 Setting up Serena MCP for existing project..."
 ```
 
 #### For `setup-mcp-servers.sh`
+
 Include Serena as a premium MCP server option:
 
 ```bash
@@ -63,6 +68,7 @@ install_serena_server() {
 Create `setup-serena.sh` with the following functionality:
 
 #### Command Line Options
+
 ```bash
 --project-path PATH     # Project directory path
 --type TYPE            # Project type (web, api, mobile, etc.)
@@ -131,6 +137,7 @@ This project is enhanced with Serena, an intelligent code analysis MCP server.
 ### 4. Integration Points
 
 #### Pre-Setup Checks
+
 ```bash
 # Check for uvx availability
 check_serena_dependencies() {
@@ -144,6 +151,7 @@ check_serena_dependencies() {
 ```
 
 #### Post-Setup Validation
+
 ```bash
 # Verify Serena integration
 validate_serena_setup() {
@@ -161,6 +169,7 @@ validate_serena_setup() {
 ```
 
 #### Error Handling
+
 ```bash
 # Common error scenarios and solutions
 handle_serena_errors() {
@@ -184,16 +193,19 @@ handle_serena_errors() {
 ## Recommended Implementation Flow
 
 ### Phase 1: Basic Integration
+
 1. Add `setup-serena.sh` script with uvx-based installation
 2. Modify existing scripts to call Serena setup as optional final step
 3. Update documentation templates to include Serena sections
 
 ### Phase 2: Enhanced Features
+
 1. Add project indexing logic based on project size
 2. Implement dependency checking and alternative installation methods
 3. Add validation and error handling
 
 ### Phase 3: Advanced Configuration
+
 1. Project-type specific Serena configurations
 2. Framework-aware setup optimizations
 3. Team onboarding documentation for Serena usage
@@ -201,12 +213,14 @@ handle_serena_errors() {
 ## Command Examples for Integration
 
 ### New Project with Serena
+
 ```bash
 ./init-new-project.sh --name "my-app" --type web --framework react
 # Automatically calls: setup-serena.sh --project-path "my-app" --type web --framework react
 ```
 
 ### Existing Project with Serena
+
 ```bash
 cd /existing/project
 ./init-existing-project.sh --force
@@ -214,6 +228,7 @@ cd /existing/project
 ```
 
 ### Manual Serena Setup
+
 ```bash
 ./setup-serena.sh --project-path "$(pwd)" --type api --framework express --index-now
 ```
@@ -221,16 +236,19 @@ cd /existing/project
 ## Benefits for Your Initiative
 
 ### For Individual Developers
+
 - **Faster Onboarding**: Immediate intelligent code analysis
 - **Better Context**: Claude gets smarter about codebase structure
 - **Cost Efficiency**: Reduced token usage through semantic search
 
 ### For Engineering Teams
+
 - **Consistent Tooling**: Standardized intelligent analysis across projects
 - **Knowledge Transfer**: Easier codebase exploration for new team members
 - **Migration Support**: Better understanding of legacy code during refactoring
 
 ### For Your Claude Code Init System
+
 - **Competitive Advantage**: Advanced MCP integration out-of-the-box
 - **User Value**: Immediate productivity boost
 - **Extensibility**: Foundation for adding more specialized MCP servers
