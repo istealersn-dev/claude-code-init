@@ -45,6 +45,9 @@ PROJECT_NAME=$(basename "$(pwd)")
 echo "🔄 Setting up Claude Code for existing project: $PROJECT_NAME"
 echo "📍 Project path: $(pwd)"
 
+# Store script directory for agent copying
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Detect project type and framework
 detect_project_info() {
     local project_type="unknown"
@@ -136,6 +139,106 @@ detect_project_info() {
 PROJECT_INFO=$(detect_project_info)
 eval "$PROJECT_INFO"
 
+# Function to determine which agents to copy
+determine_agents() {
+    local agents=()
+    
+    # Frontend agents based on framework
+    case "$FRAMEWORK" in
+        "Next.js")
+            agents+=("frontend/nextjs-expert.md")
+            ;;
+        "React")
+            agents+=("frontend/react-vite-expert.md")
+            ;;
+        "Vue")
+            agents+=("frontend/vue-expert.md")
+            ;;
+        "Svelte")
+            agents+=("frontend/svelte-expert.md")
+            ;;
+        "Angular")
+            # Note: Angular agent not yet created, will use generic web approach
+            echo "⚠️  Angular agent not available yet. Consider creating one or using general web practices."
+            ;;
+    esac
+    
+    # Backend agents based on framework
+    case "$FRAMEWORK" in
+        "Express")
+            agents+=("backend/express-expert.md")
+            ;;
+        "Fastify"|"FastAPI")
+            agents+=("backend/fastify-expert.md")
+            ;;
+        "Django"|"Flask")
+            echo "⚠️  Python web framework agents not available yet. Consider creating specific agents."
+            ;;
+    esac
+    
+    # Database agents - try to detect from dependencies
+    if [[ "$PROJECT_TYPE" == "api" ]] || [[ "$PROJECT_TYPE" == "web" ]]; then
+        # Check for database-related dependencies
+        if [[ -f "package.json" ]]; then
+            if grep -q "postgres\|pg\|prisma.*postgres" package.json 2>/dev/null; then
+                agents+=("database/postgresql-expert.md")
+            elif grep -q "sqlite" package.json 2>/dev/null; then
+                agents+=("database/sqlite-expert.md")
+            fi
+        elif [[ -f "requirements.txt" ]]; then
+            if grep -q "psycopg\|postgres" requirements.txt 2>/dev/null; then
+                agents+=("database/postgresql-expert.md")
+            elif grep -q "sqlite" requirements.txt 2>/dev/null; then
+                agents+=("database/sqlite-expert.md")
+            fi
+        fi
+    fi
+    
+    # Output the agents array
+    printf '%s\n' "${agents[@]}"
+}
+
+# Function to copy agents to project
+copy_agents() {
+    local agents_source_dir="$SCRIPT_DIR/_agents"
+    
+    if [[ ! -d "$agents_source_dir" ]]; then
+        echo "⚠️  Agents directory not found at $agents_source_dir"
+        echo "    Make sure this script is in the same directory as the _agents folder"
+        return 1
+    fi
+    
+    # Get list of agents to copy
+    local agents_to_copy=($(determine_agents))
+    
+    if [[ ${#agents_to_copy[@]} -eq 0 ]]; then
+        echo "🤖 No specific agents detected for this project type"
+        return 0
+    fi
+    
+    # Create .claude/agents directory
+    mkdir -p ".claude/agents"
+    
+    echo "🤖 Copying relevant agents:"
+    
+    # Copy each determined agent
+    for agent in "${agents_to_copy[@]}"; do
+        local source_file="$agents_source_dir/$agent"
+        local dest_file=".claude/agents/$agent"
+        
+        if [[ -f "$source_file" ]]; then
+            # Create directory structure if needed
+            mkdir -p "$(dirname "$dest_file")"
+            cp "$source_file" "$dest_file"
+            echo "  ✅ Copied $(basename "$agent")"
+        else
+            echo "  ⚠️  Agent not found: $agent"
+        fi
+    done
+    
+    return 0
+}
+
 # Function to create or update CLAUDE.md
 create_claude_md() {
     local claude_file="CLAUDE.md"
@@ -175,6 +278,9 @@ $(generate_dev_commands)
 - Mark todos as completed immediately after finishing
 - Track progress visually for complex refactoring work
 - Break large refactoring tasks into smaller, manageable chunks
+
+## Expert Agents
+$(generate_agent_info)
 
 ## MCP Servers
 <!-- Add MCP servers relevant to this project type -->
@@ -264,6 +370,53 @@ generate_dev_commands() {
     esac
 }
 
+# Generate agent information
+generate_agent_info() {
+    local agents_to_copy=($(determine_agents))
+    
+    if [[ ${#agents_to_copy[@]} -eq 0 ]]; then
+        echo "No expert agents detected for this project configuration."
+        echo "Consider manually adding relevant agents to the \`.claude/agents/\` directory."
+        return
+    fi
+    
+    echo "The following expert agents have been configured for this project:"
+    echo ""
+    
+    for agent in "${agents_to_copy[@]}"; do
+        local agent_name=$(basename "$agent" .md)
+        case "$agent" in
+            "frontend/nextjs-expert.md")
+                echo "- **nextjs-tailwind-expert**: Next.js 14+ with App Router and Tailwind CSS v4"
+                ;;
+            "frontend/react-vite-expert.md")
+                echo "- **react-vite-tailwind-expert**: React 18+ with Vite and Tailwind CSS"
+                ;;
+            "frontend/vue-expert.md")
+                echo "- **vue-tailwind-expert**: Vue 3 with Composition API and Tailwind CSS"
+                ;;
+            "frontend/svelte-expert.md")
+                echo "- **svelte-tailwind-expert**: Svelte 4+ with SvelteKit and Tailwind CSS"
+                ;;
+            "backend/express-expert.md")
+                echo "- **express-expert**: Express.js with TypeScript and security best practices"
+                ;;
+            "backend/fastify-expert.md")
+                echo "- **fastify-expert**: Fastify with TypeScript and performance optimization"
+                ;;
+            "database/postgresql-expert.md")
+                echo "- **postgresql-expert**: PostgreSQL with Prisma and query optimization"
+                ;;
+            "database/sqlite-expert.md")
+                echo "- **sqlite-expert**: SQLite with development and migration patterns"
+                ;;
+        esac
+    done
+    
+    echo ""
+    echo "These agents provide framework-specific expertise and can be activated using Claude Code's agent system."
+}
+
 # Generate MCP server suggestions
 generate_mcp_suggestions() {
     echo "<!-- Consider adding these MCP servers based on your project type: -->"
@@ -340,6 +493,7 @@ EOF
 # Run the setup
 create_claude_md
 create_migration_checklist
+copy_agents
 
 # Create .github directory and PR template if it doesn't exist
 if [[ ! -d ".github/PULL_REQUEST_TEMPLATE" ]]; then
@@ -393,6 +547,7 @@ echo "📁 Created/updated files:"
 echo "  - CLAUDE.md (Claude Code instructions)"
 echo "  - MIGRATION_CHECKLIST.md (Migration tracking)"
 echo "  - .github/PULL_REQUEST_TEMPLATE/default.md (PR template)"
+echo "  - .claude/agents/ (Expert agents for your tech stack)"
 echo ""
 echo "🔧 Next steps:"
 echo "  1. Review and customize CLAUDE.md for your project"
